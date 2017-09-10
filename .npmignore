@@ -1,0 +1,4 @@
+.git/
+.idea/
+__test__/
+npm-debug.log
