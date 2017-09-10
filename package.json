@@ -1,6 +1,6 @@
 {
   "name": "redux-mediator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Redux middleware to support mediator pattern",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
@@ -14,9 +14,11 @@
     "url": "git+ssh://git@github.com/quadreex/redux-mediator.git"
   },
   "keywords": [
+    "redux",
+    "mediator",
+    "pattern",
     "action",
-    "mapper",
-    "redux"
+    "mapper"
   ],
   "author": "Denis Rodin",
   "license": "MIT",

@@ -1,28 +1,27 @@
-
+/**
+ * createMediator
+ *
+ * @param map {Object} - dictionary, used to map initial actions to new ones
+ */
 export default (map = {}) => store => next => action => {
-  const mapped = map[action.type];
+  const descriptor = map[action.type];
 
-  if (!mapped || !mapped.type) {
+  if (!descriptor || !descriptor.type) {
     return next(action);
   }
 
-  let newAction;
+  const payload = typeof descriptor.mapPayload === 'function'
+    ? descriptor.mapPayload(action, ...(descriptor.args || []), store.getState())
+    : action;
 
-  if (typeof mapped.mapPayload !== 'function') {
-    newAction = {
-      ...action,
-      type: mapped.type
-    };
-  } else {
-    newAction = {
-      ...mapped.mapPayload(action, ...(mapped.args || []), store.getState()),
-      type: mapped.type
-    };
-  }
+  const newAction = {
+    ...payload,
+    type: descriptor.type
+  };
 
   store.dispatch(newAction);
 
-  if (!mapped.suppress) {
+  if (!descriptor.suppress) {
     return next(action);
   }
 };
