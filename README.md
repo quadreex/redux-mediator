@@ -13,14 +13,16 @@ npm install redux-mediator --save
 The default export is a function - creator of middleware. It accepts one Object parameter - action mapper. Keys of this object is action types, values - descriptors of action transformation. 
 
 Transformation descriptor fields:
-- `type` - type of mapped action (required);
-- `mapPayload` - function to transform payload (optional);
+- `type` - type of mapped action (required*);
+- `create` - function to create new action based on old one (required*);
 - `args` - additional arguments for transformation function (optional);
 - `suppress` - boolean flag, which indicates if initial action should be suppressed (optional).
 
-Transformation function:
+\* user have to specify one of `type` or `create`. If `create` is specified, then `type` will be ignored.
+
+Action creator:
 ```javascript
-mapPayload(action, ...args, state)
+create(action, ...args, state)
 ```
 - action - initial action;
 - args - additional arguments (if defined in descriptor);
@@ -31,17 +33,16 @@ Example:
 import createMediator from 'redux-mediator';
 
 const mediator = createMediator({
-
   /* For each action with type 'action1.in' */
   'action1.in': {
-      /* create new action with type 'action1.out' */
-      type: 'action1.out',
       /*
+        create new action with type 'action1.out'
         with payload 'a', 'b', and 'c' from params and 
-        'src' from initial action
+        'dst' from initial action field 'src'
       */
-      mapPayload: (action, a, b, c) => ({
-        a, b, c, src: action.src
+      create: (action, a, b, c, state) => ({
+        type: 'action1.out',
+        a, b, c, dst: action.src
       }),
       args: [1, 2, 3], // values to be passed as params to 'mapPayload function'
       suppress: true // suppress initial action
