@@ -1,5 +1,7 @@
 # redux-mediator
 
+[![Build Status](https://secure.travis-ci.org/quadreex/redux-mediator.png?branch=master)](http://travis-ci.org/quadreex/redux-mediator)
+
 Redux middleware to support mediator pattern. Helps you to reduce complexity of large redux applications by separating your codebase into independent modules which know nothing about each other. Communication between modules is encapsulated within a mediator middleware. Modules no longer use actions of each other directly, but instead communicate through the mediator. Mediator maps output actions of one module to input actions of another. This reduces the dependencies between communicating objects, thereby reducing coupling.
 
 ## Install

@@ -1,12 +1,13 @@
 {
   "name": "redux-mediator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Redux middleware to support mediator pattern",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
   "scripts": {
     "test": "tape -r babel-register \"__test__/**/*.test.js\" | tap-spec",
-    "build": "babel src -d dist",
+    "compile": "babel src -d dist",
+    "build": "npm test && npm run compile",
     "prepublish": "npm run build"
   },
   "repository": {
