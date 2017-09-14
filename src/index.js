@@ -5,8 +5,8 @@
  */
 export default (map = {}) => store => next => action => {
   const descriptor = map[action.type];
-  const noType = !descriptor.type;
-  const noCreator = typeof descriptor.create !== 'function';
+  const noType = !descriptor || !descriptor.type;
+  const noCreator = !descriptor || typeof descriptor.create !== 'function';
 
   if (!descriptor || (noType && noCreator)) {
     return next(action);

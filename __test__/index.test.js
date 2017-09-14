@@ -131,3 +131,27 @@ test('Copy payload, pass initial action', t => {
 
   t.end();
 });
+
+test('Ignore other actions', t => {
+  const { store, next } = setupSpies();
+  const dispatch = mediator(store)(next);
+
+  const OTHER_ACTION = {
+    type: 'other.action',
+    src: 'foo',
+    dst: 'bar'
+  };
+
+  dispatch(OTHER_ACTION);
+
+  t.notOk(store.getState.called, 'store.getState should not be called');
+  t.notOk(store.dispatch.called, 'store.dispatch should not be called');
+  t.ok(next.calledOnce, 'next should be called once');
+  t.deepEqual(
+    next.getCall(0).args[0],
+    OTHER_ACTION,
+    'next should be called with action'
+  );
+
+  t.end();
+});
