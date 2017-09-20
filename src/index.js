@@ -5,26 +5,30 @@
  */
 export default (map = {}) => store => next => action => {
   const descriptor = map[action.type];
-  const noType = !descriptor || !descriptor.type;
-  const noCreator = !descriptor || typeof descriptor.create !== 'function';
+  const hasDescriptor = typeof descriptor === 'object';
+  const { type, create, predicate, suppress } = descriptor || {};
+  const hasType = typeof type !== 'undefined';
+  const hasCreator = typeof create === 'function';
+  const hasPredicate = typeof predicate === 'function';
+  const needState = (hasCreator && create.length > 1)
+    || (hasPredicate && predicate.length > 1);
+  const state = needState ? store.getState() : void 0;
 
-  if (!descriptor || (noType && noCreator)) {
+  if (!hasDescriptor || !(hasType || hasCreator)) {
     return next(action);
   }
 
-  if (noCreator) {
-    store.dispatch({ ...action, type: descriptor.type });
-  } else {
-    const additionalArgs = descriptor.args || [];
-    const needStore = descriptor.create.length > additionalArgs.length + 1;
-    const params = needStore
-      ? [action, ...additionalArgs, store.getState()]
-      : [action, ...additionalArgs];
-
-    store.dispatch(descriptor.create(...params));
+  if (hasPredicate && !predicate(action, state)) {
+    return next(action);
   }
 
-  if (!descriptor.suppress) {
+  const newAction = hasCreator
+    ? create(action, state)
+    : { ...action, type };
+
+  store.dispatch(newAction);
+
+  if (!suppress) {
     return next(action);
   }
 };
