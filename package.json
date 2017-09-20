@@ -1,6 +1,6 @@
 {
   "name": "redux-mediator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Redux middleware to support mediator pattern",
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",

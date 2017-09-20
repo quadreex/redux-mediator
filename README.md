@@ -87,9 +87,9 @@ const mediator = createMediator({
         predicate: (action, state) => action.value > 0,
         suppress: true // suppress initial action
         /*
-          Initial action will be suppressed. Dispatching of action
-          'cond.in' will actually dispatch action 'cond.out' if initial
-          action had value > 0
+          If predicate returns true for initial action it will be suppressed
+          and new action with type 'cond.out' will be dispatched.
+          If predicate returns false for initial action it will be dispatched.
         */
     }
 });
