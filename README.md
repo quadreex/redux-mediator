@@ -91,9 +91,32 @@ const mediator = createMediator({
           and new action with type 'cond.out' will be dispatched.
           If predicate returns false for initial action it will be dispatched.
         */
-    }
+    },
+    
+    /*
+      Also you can map action to an array of descriptors.
+    */
+    'multi.in' : [
+        { type: 'multi.out.1', suppress: true },
+        { create: (action, state) => ({
+          type: 'multi.out.2',
+          dst: action.src + 'bar'
+        }) },
+        { create: (action, state) => ({
+          type: 'multi.out.3',
+          dst: action.src
+        }) }
+    ]
 });
 ```
+
+## Changelog
+
+version 1.1.0:
+- added support for multi descriptors
+
+version 1.0.1:
+- first stable version
 
 ## License
 
