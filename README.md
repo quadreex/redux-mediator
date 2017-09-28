@@ -112,6 +112,9 @@ const mediator = createMediator({
 
 ## Changelog
 
+version 1.1.1:
+- fixed the order of dispatching
+
 version 1.1.0:
 - added support for multi descriptors
 

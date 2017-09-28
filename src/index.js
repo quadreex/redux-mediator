@@ -22,6 +22,7 @@ export default (map = {}) => store => next => action => {
     suppress: ({ suppress }) => suppress
   })(steps);
   const state = flags.needState ? store.getState() : void 0;
+  const result = flags.suppress ? void 0 : next(action);
 
   steps.forEach(step => {
     if (step.predicate(action, state)) {
@@ -29,9 +30,7 @@ export default (map = {}) => store => next => action => {
     }
   });
 
-  if (!flags.suppress) {
-    return next(action);
-  }
+  return result;
 };
 
 const parser = (descriptor = {}) => {
