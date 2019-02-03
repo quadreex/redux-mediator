@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "jsnext:main": "src/index.js",
   "scripts": {
-    "test": "nyc tape -r babel-register \"__test__/**/*.test.js\" | tap-spec",
+    "test": "nyc tape -r @babel/register \"__test__/**/*.test.js\" | tap-spec",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "compile": "babel src -d dist",
     "build": "npm test && npm run compile",
@@ -29,14 +29,15 @@
   },
   "homepage": "https://github.com/quadreex/redux-mediator#readme",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.0",
-    "babel-register": "^6.26.0",
-    "coveralls": "^2.13.1",
-    "nyc": "^11.2.1",
-    "sinon": "^3.2.1",
-    "tap-spec": "^4.1.1",
-    "tape": "^4.8.0"
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.2.2",
+    "@babel/plugin-transform-spread": "^7.2.2",
+    "@babel/preset-env": "^7.3.1",
+    "@babel/register": "^7.0.0",
+    "coveralls": "^3.0.2",
+    "nyc": "^13.1.0",
+    "sinon": "^7.2.3",
+    "tap-spec": "^5.0.0",
+    "tape": "^4.9.2"
   }
 }
